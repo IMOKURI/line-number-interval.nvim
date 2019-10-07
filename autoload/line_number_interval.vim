@@ -1,0 +1,55 @@
+function! line_number_interval#update() abort
+    try
+        call sign_undefine('LineNumberInterval')
+    catch
+    endtry
+    call sign_define('LineNumberInterval', {
+        \ 'numhl': 'LineNrVisible'
+        \ })
+
+    if &relativenumber
+        " Set sign backwards.
+        let s:lnum = line('.') - 1
+        let s:numfold = 0
+        while s:lnum >= line('w0')
+            let s:numfolddelta = 0
+            if foldclosed(s:lnum) != -1
+                let s:numfolddelta = s:lnum - foldclosed(s:lnum)
+                let s:numfold += s:numfolddelta
+            endif
+            if (line('.') - s:lnum - s:numfold) % g:line_number_interval == 0
+                call sign_place('10', '', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
+            endif
+            let s:lnum -= 1 + s:numfolddelta
+        endwhile
+
+        " Set sign afterwards.
+        let s:lnum = line('.') + 1
+        if foldclosed(line('.')) != -1
+            let s:numfold = 1
+        else
+            let s:numfold = 0
+        endif
+        while s:lnum <= line('w$')
+            let s:numfolddelta = 0
+            if foldclosedend(s:lnum) != -1
+                let s:numfolddelta = foldclosedend(s:lnum) - s:lnum
+                let s:numfold += s:numfolddelta
+            endif
+            if (s:lnum - line('.') - s:numfold) % g:line_number_interval == 0
+                call sign_place('10', '', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
+            endif
+            let s:lnum += 1 + s:numfolddelta
+        endwhile
+
+    elseif &number
+        let s:lnum = line('w0')
+        while s:lnum <= line('w$')
+            if s:lnum % g:line_number_interval == 0 && s:lnum != line('.')
+                call sign_place('10', '', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
+            endif
+            let s:lnum += 1
+        endwhile
+    endif
+
+endfunction
