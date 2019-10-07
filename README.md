@@ -26,6 +26,11 @@ let g:line_number_interval#enable = 1
 let g:line_number_interval = 5
 ```
 
+## Commands
+
+- `LineNumberIntervalEnable`: Enable line number interval.
+- `LineNumberIntervalDisable`: Disable line number interval.
+
 ## FAQ
 
 Q. Can I hide folded line number?

@@ -8,8 +8,8 @@ if !exists('g:line_number_interval')
 endif
 
 if get(g:, 'line_number_interval#enable', 0)
-    augroup LineNumberInterval
-        autocmd!
-        autocmd BufRead,BufNewFile,CursorMoved,CursorMovedI * call line_number_interval#update()
-    augroup END
+    call line_number_interval#enable()
 endif
+
+command! LineNumberIntervalEnable call line_number_interval#enable()
+command! LineNumberIntervalDisable call line_number_interval#disable()
