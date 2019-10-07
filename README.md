@@ -2,7 +2,7 @@
 
 Set line number by each XX lines.
 
-## Screen Shots
+## Screenshots
 
 ### set number
 
@@ -37,3 +37,4 @@ The whole line belongs to the `Folded` highlight group.
 
 - Toggle line number interval
 - Tests
+- Document
