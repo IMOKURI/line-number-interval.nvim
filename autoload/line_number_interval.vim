@@ -11,6 +11,8 @@ function! line_number_interval#enable() abort
     augroup END
 
     redraw
+
+    let s:enabled_line_number_interval = 1
 endfunction
 
 function! line_number_interval#disable() abort
@@ -19,6 +21,16 @@ function! line_number_interval#disable() abort
     augroup END
 
     execute 'highlight LineNr guifg=' s:linenr_fg 'guibg=' s:linenr_bg
+
+    let s:enabled_line_number_interval = 0
+endfunction
+
+function! line_number_interval#toggle() abort
+    if s:enabled_line_number_interval
+        call line_number_interval#disable()
+    else
+        call line_number_interval#enable()
+    endif
 endfunction
 
 function! line_number_interval#update() abort

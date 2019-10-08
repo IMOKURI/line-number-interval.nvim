@@ -30,6 +30,7 @@ let g:line_number_interval = 5
 
 - `LineNumberIntervalEnable`: Enable line number interval.
 - `LineNumberIntervalDisable`: Disable line number interval.
+- `LineNumberIntervalToggle`: Toggle line number interval.
 
 ## FAQ
 
@@ -40,6 +41,5 @@ The whole line belongs to the `Folded` highlight group.
 
 ## ToDo
 
-- Toggle line number interval
 - Tests
 - Document
