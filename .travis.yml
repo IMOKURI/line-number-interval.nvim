@@ -6,7 +6,7 @@ env:
         - PATH=$HOME/neovim/bin:$PATH
 
 install:
-    - git clone https://github.com/junegunn/vader.vim.git tests/vader.vim
+    - git clone https://github.com/junegunn/vader.vim.git test/vader.vim
     - eval "$(curl -Ss https://raw.githubusercontent.com/neovim/bot-ci/master/scripts/travis-setup.sh) nightly-x64"
 
 script:

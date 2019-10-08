@@ -43,5 +43,4 @@ The whole line belongs to the `Folded` highlight group.
 
 ## ToDo
 
-- CI
 - Document
