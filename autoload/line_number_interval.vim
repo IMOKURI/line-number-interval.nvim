@@ -1,9 +1,24 @@
 function! line_number_interval#enable() abort
-    let s:linenr_bg = synIDattr(synIDtrans(hlID('LineNr')), 'bg')
-    let s:linenr_fg = synIDattr(synIDtrans(hlID('LineNr')), 'fg')
+    let s:ui_type = ['gui', 'cterm']
+    let s:fg_bg = ['fg', 'bg']
 
-    execute 'highlight LineNr guifg=' s:linenr_bg 'guibg=' s:linenr_bg
-    execute 'highlight LineNrVisible guifg=' s:linenr_fg 'guibg=' s:linenr_bg
+    let s:linenr_color = {}
+    for l:type in s:ui_type
+        let s:linenr_color[l:type] = {}
+        for l:fb in s:fg_bg
+            let s:linenr_color[l:type][l:fb] = synIDattr(synIDtrans(hlID('LineNr')), l:fb, l:type)
+            if s:linenr_color[l:type][l:fb] ==# ''
+                let s:linenr_color[l:type][l:fb] = 'NONE'
+            endif
+        endfor
+    endfor
+
+    execute 'highlight LineNr'
+        \ 'guifg='   s:linenr_color.gui.bg   'guibg='   s:linenr_color.gui.bg
+        \ 'ctermfg=' s:linenr_color.cterm.bg 'ctermbg=' s:linenr_color.cterm.bg
+    execute 'highlight LineNrVisible'
+        \ 'guifg='   s:linenr_color.gui.fg   'guibg='   s:linenr_color.gui.bg
+        \ 'ctermfg=' s:linenr_color.cterm.fg 'ctermbg=' s:linenr_color.cterm.bg
 
     call sign_define('LineNumberInterval', {
         \ 'numhl': 'LineNrVisible'
@@ -27,7 +42,9 @@ function! line_number_interval#disable() abort
     call sign_unplace('LineNumberGroup', {'buffer': bufname('%')})
     call sign_undefine('LineNumberInterval')
 
-    execute 'highlight LineNr guifg=' s:linenr_fg 'guibg=' s:linenr_bg
+    execute 'highlight LineNr'
+        \ 'guifg='   s:linenr_color.gui.fg   'guibg='   s:linenr_color.gui.bg
+        \ 'ctermfg=' s:linenr_color.cterm.fg 'ctermbg=' s:linenr_color.cterm.bg
 
     let s:enabled_line_number_interval = 0
 endfunction
