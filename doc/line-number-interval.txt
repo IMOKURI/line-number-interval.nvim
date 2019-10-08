@@ -1,0 +1,70 @@
+*line-number-interval.txt*	Set line number by each XX lines.
+
+Version : 0.1
+Author  : IMOKURI <nenegi.01mo at gmail.com>
+License : MIT license
+
+
+==============================================================================
+CONTENTS					*line-number-interval-contents*
+
+INTRODUCTION			|line-number-interval-introduction|
+REQUIREMENTS				|line-number-interval-requirements|
+INTERFACE			|line-number-interval-interface|
+  VARIABLES			  |line-number-interval-variables|
+  COMMANDS			  |line-number-interval-commands|
+CHANGELOG			|line-number-interval-changelog|
+
+
+==============================================================================
+INTRODUCTION					*line-number-interval-introduction*
+
+*line-number-interval* is a Vim plugin that display line number/relativenumber
+by each XX lines.
+
+Latest version:
+https://github.com/IMOKURI/line-number-interval.nvim
+
+
+==============================================================================
+REQUIREMENTS					*line-number-interval-requirements*
+
+*line-number-interval* requires Neovim (0.3.2+).
+
+
+==============================================================================
+INTERFACE					*line-number-interval-interface*
+
+------------------------------------------------------------------------------
+VARIABLES					*line-number-interval-variables*
+
+g:line_number_interval#enable_at_startup	*g:line_number_interval#enable_at_startup*
+	default value: 0
+	Enable *line-number-interval* at startup if this value is 1.
+
+g:line_number_interval				*g:line_number_interval*
+	default value: 10
+	Set interval to display line number.
+
+------------------------------------------------------------------------------
+COMMANDS					*line-number-interval-commands*
+
+:LineNumberIntervalEnable			*:LineNumberIntervalEnable*
+	Enable *line-number-interval*
+
+:LineNumberIntervalDisable			*:LineNumberIntervalDisable*
+	Disable *line-number-interval*
+
+:LineNumberIntervalToggle			*:LineNumberIntervalToggle*
+	Toggle *line-number-interval*
+
+
+==============================================================================
+CHANGELOG					*line-number-interval-changelog*
+
+0.1	2019-10-08
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:

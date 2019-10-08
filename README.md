@@ -21,7 +21,7 @@ Set line number by each XX lines.
 ## Configurations
 
 ``` vim
-" Enable line number interval at startup.
+" Enable line number interval at startup. (default: 0(disable))
 let g:line_number_interval#enable_at_startup = 1
 
 " Set interval to display line number. (default: 10)
@@ -41,6 +41,8 @@ Q. Can I hide folded line number?
 A. Unfortunately, it's not possible.
 The whole line belongs to the `Folded` highlight group.
 
-## ToDo
+Q. Can I use this plugin for Vim?
 
-- Document
+A. Unfortunately, no.
+This plugin uses `numhl` highlight group of `sign` feature.
+Vim has not this highlight group...
