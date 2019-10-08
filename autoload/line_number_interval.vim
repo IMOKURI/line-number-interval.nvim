@@ -30,6 +30,7 @@ function! line_number_interval#enable() abort
     augroup END
 
     call line_number_interval#update()
+    redraw
 
     let s:enabled_line_number_interval = 1
 endfunction
