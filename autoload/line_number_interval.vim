@@ -24,6 +24,7 @@ function! line_number_interval#disable() abort
         autocmd!
     augroup END
 
+    call sign_unplace('LineNumberGroup', {'buffer': bufname('%')})
     call sign_undefine('LineNumberInterval')
 
     execute 'highlight LineNr guifg=' s:linenr_fg 'guibg=' s:linenr_bg
