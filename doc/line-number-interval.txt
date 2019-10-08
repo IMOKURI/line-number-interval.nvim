@@ -9,7 +9,7 @@ License : MIT license
 CONTENTS					*line-number-interval-contents*
 
 INTRODUCTION			|line-number-interval-introduction|
-REQUIREMENTS				|line-number-interval-requirements|
+REQUIREMENTS			|line-number-interval-requirements|
 INTERFACE			|line-number-interval-interface|
   VARIABLES			  |line-number-interval-variables|
   COMMANDS			  |line-number-interval-commands|
@@ -29,7 +29,7 @@ https://github.com/IMOKURI/line-number-interval.nvim
 ==============================================================================
 REQUIREMENTS					*line-number-interval-requirements*
 
-*line-number-interval* requires Neovim (0.3.2+).
+line-number-interval requires Neovim (0.3.2+).
 
 
 ==============================================================================
@@ -40,7 +40,7 @@ VARIABLES					*line-number-interval-variables*
 
 g:line_number_interval#enable_at_startup	*g:line_number_interval#enable_at_startup*
 	default value: 0
-	Enable *line-number-interval* at startup if this value is 1.
+	Enable line-number-interval at startup if this value is 1.
 
 g:line_number_interval				*g:line_number_interval*
 	default value: 10
@@ -50,13 +50,13 @@ g:line_number_interval				*g:line_number_interval*
 COMMANDS					*line-number-interval-commands*
 
 :LineNumberIntervalEnable			*:LineNumberIntervalEnable*
-	Enable *line-number-interval*
+	Enable line-number-interval
 
 :LineNumberIntervalDisable			*:LineNumberIntervalDisable*
-	Disable *line-number-interval*
+	Disable line-number-interval
 
 :LineNumberIntervalToggle			*:LineNumberIntervalToggle*
-	Toggle *line-number-interval*
+	Toggle line-number-interval
 
 
 ==============================================================================
