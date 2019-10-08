@@ -8,11 +8,11 @@ Set line number by each XX lines.
 
 ### set number
 
-![set-number](https://user-images.githubusercontent.com/1638500/66323526-e1713080-e95e-11e9-9b1d-328cecbd7736.gif)
+![line-number-interval](https://user-images.githubusercontent.com/1638500/66383495-12517400-e9f8-11e9-98f2-e74bb17952fc.gif)
 
 ### set relativenumber
 
-![set-relativenumber](https://user-images.githubusercontent.com/1638500/66323558-ee8e1f80-e95e-11e9-9435-8c86bbfdc75e.gif)
+![line-number-interval-relative](https://user-images.githubusercontent.com/1638500/66383521-1e3d3600-e9f8-11e9-98d4-4b604fd45fdc.gif)
 
 ## Requirements
 
