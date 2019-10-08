@@ -2,6 +2,8 @@
 
 Set line number by each XX lines.
 
+[![Build Status](https://travis-ci.org/IMOKURI/line-number-interval.nvim.svg?branch=master)](https://travis-ci.org/IMOKURI/line-number-interval.nvim)
+
 ## Screenshots
 
 ### set number
