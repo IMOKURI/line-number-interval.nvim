@@ -7,7 +7,7 @@ if !exists('g:line_number_interval')
     let g:line_number_interval = 10
 endif
 
-if get(g:, 'line_number_interval#enable', 0)
+if get(g:, 'line_number_interval#enable_at_startup', 0)
     call line_number_interval#enable()
 endif
 

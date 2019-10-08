@@ -20,7 +20,7 @@ Set line number by each XX lines.
 
 ``` vim
 " Enable line number interval at startup.
-let g:line_number_interval#enable = 1
+let g:line_number_interval#enable_at_startup = 1
 
 " Set interval to display line number. (default: 10)
 let g:line_number_interval = 5
