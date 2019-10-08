@@ -1,0 +1,14 @@
+dist: xenial
+language: minimal
+
+env:
+    global:
+        - PATH=$HOME/neovim/bin:$PATH
+
+install:
+    - git clone https://github.com/junegunn/vader.vim.git tests/vader.vim
+    - eval "$(curl -Ss https://raw.githubusercontent.com/neovim/bot-ci/master/scripts/travis-setup.sh) nightly-x64"
+    - make install
+
+script:
+    - cd test && ./run.sh && echo Success || echo Fail
