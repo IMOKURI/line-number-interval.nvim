@@ -5,6 +5,10 @@ function! line_number_interval#enable() abort
     execute 'highlight LineNr guifg=' s:linenr_bg 'guibg=' s:linenr_bg
     execute 'highlight LineNrVisible guifg=' s:linenr_fg 'guibg=' s:linenr_bg
 
+    call sign_define('LineNumberInterval', {
+        \ 'numhl': 'LineNrVisible'
+        \ })
+
     augroup LineNumberInterval
         autocmd!
         autocmd BufRead,BufNewFile,CursorMoved,CursorMovedI * call line_number_interval#update()
@@ -20,6 +24,8 @@ function! line_number_interval#disable() abort
         autocmd!
     augroup END
 
+    call sign_undefine('LineNumberInterval')
+
     execute 'highlight LineNr guifg=' s:linenr_fg 'guibg=' s:linenr_bg
 
     let s:enabled_line_number_interval = 0
@@ -34,13 +40,7 @@ function! line_number_interval#toggle() abort
 endfunction
 
 function! line_number_interval#update() abort
-    try
-        call sign_undefine('LineNumberInterval')
-    catch
-    endtry
-    call sign_define('LineNumberInterval', {
-        \ 'numhl': 'LineNrVisible'
-        \ })
+    call sign_unplace('LineNumberGroup', {'buffer': bufname('%')})
 
     if &relativenumber
         " Set sign backwards.
@@ -53,7 +53,7 @@ function! line_number_interval#update() abort
                 let s:numfold += s:numfolddelta
             endif
             if (line('.') - s:lnum - s:numfold) % g:line_number_interval == 0
-                call sign_place('10', '', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
+                call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
             endif
             let s:lnum -= 1 + s:numfolddelta
         endwhile
@@ -72,7 +72,7 @@ function! line_number_interval#update() abort
                 let s:numfold += s:numfolddelta
             endif
             if (s:lnum - line('.') - s:numfold) % g:line_number_interval == 0
-                call sign_place('10', '', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
+                call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
             endif
             let s:lnum += 1 + s:numfolddelta
         endwhile
@@ -81,7 +81,7 @@ function! line_number_interval#update() abort
         let s:lnum = line('w0')
         while s:lnum <= line('w$')
             if s:lnum % g:line_number_interval == 0 && s:lnum != line('.')
-                call sign_place('10', '', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
+                call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
             endif
             let s:lnum += 1
         endwhile
