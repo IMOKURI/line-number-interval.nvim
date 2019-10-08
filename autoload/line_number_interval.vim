@@ -62,7 +62,6 @@ function! line_number_interval#update() abort
     call sign_unplace('LineNumberGroup', {'buffer': bufname('%')})
 
     if &relativenumber
-        " Set sign backwards.
         let s:lnum = line('.') - 1
         let s:numfold = 0
         while s:lnum >= line('w0')
@@ -77,7 +76,6 @@ function! line_number_interval#update() abort
             let s:lnum -= 1 + s:numfolddelta
         endwhile
 
-        " Set sign afterwards.
         let s:lnum = line('.') + 1
         if foldclosed(line('.')) != -1
             let s:numfold = 1
