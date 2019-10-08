@@ -1,0 +1,68 @@
+Given (prepare base text):
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+    12
+    13
+    14
+    15
+
+Execute (run test):
+    set number
+    set norelativenumber
+
+    LineNumberIntervalEnable
+
+    AssertEqual "\nsign LineNumberInterval numhl=LineNrVisible", execute('sign list LineNumberInterval')
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=10  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    13
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=10  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    LineNumberIntervalDisable
+
+    AssertEqual "\n--- Signs ---\n", execute('sign place group=LineNumberGroup')
+    AssertThrows sign list LineNumberInterval
+    AssertEqual "Vim(sign):E155: Unknown sign: LineNumberInterval", g:vader_exception
+
+    set relativenumber
+
+    LineNumberIntervalToggle
+
+    AssertEqual "\nsign LineNumberInterval numhl=LineNrVisible", execute('sign list LineNumberInterval')
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=3  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    5
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=15  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    6,9fold
+
+    1
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=14  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    set norelativenumber
+
+    4
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=10  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    LineNumberIntervalToggle
+
+    AssertEqual "\n--- Signs ---\n", execute('sign place group=LineNumberGroup')
+    AssertThrows sign list LineNumberInterval
+    AssertEqual "Vim(sign):E155: Unknown sign: LineNumberInterval", g:vader_exception

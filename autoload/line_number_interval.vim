@@ -14,7 +14,7 @@ function! line_number_interval#enable() abort
         autocmd BufRead,BufNewFile,CursorMoved,CursorMovedI * call line_number_interval#update()
     augroup END
 
-    redraw
+    call line_number_interval#update()
 
     let s:enabled_line_number_interval = 1
 endfunction
