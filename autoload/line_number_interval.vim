@@ -34,6 +34,14 @@ function! line_number_interval#enable() abort
         endfor
     endfor
 
+    if s:dim_linenr_color.cterm.fg ==# 'NONE'
+        let s:dim_linenr_color.cterm.fg = 0
+    endif
+
+    if s:dim_linenr_color.gui.fg ==# 'NONE'
+        let s:dim_linenr_color.gui.fg = 'Black'
+    endif
+
     if hlID('HighlightedLineNr') == 0
         execute 'highlight HighlightedLineNr'
             \ 'guifg='   s:linenr_color.gui.fg   'guibg='   s:linenr_color.gui.bg
