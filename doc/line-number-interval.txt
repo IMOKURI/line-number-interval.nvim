@@ -1,6 +1,6 @@
-*line-number-interval.txt*	Set line number by each XX lines.
+*line-number-interval.txt*	Highlight line number by each XX lines.
 
-Version : 0.1
+Version : 0.2
 Author  : IMOKURI <nenegi.01mo at gmail.com>
 License : MIT license
 
@@ -12,6 +12,7 @@ INTRODUCTION			|line-number-interval-introduction|
 REQUIREMENTS			|line-number-interval-requirements|
 INTERFACE			|line-number-interval-interface|
   VARIABLES			  |line-number-interval-variables|
+  HIGHLIGHTS			  |line-number-interval-highlights|
   COMMANDS			  |line-number-interval-commands|
 CHANGELOG			|line-number-interval-changelog|
 
@@ -47,6 +48,17 @@ g:line_number_interval				*g:line_number_interval*
 	Set interval to display line number.
 
 ------------------------------------------------------------------------------
+HIGHLIGHTS				*line-number-interval-highlights*
+
+HighlightedLineNr					*HighlightedLineNr*
+	default value: same as |LineNr|
+	Set color to highlight.
+
+DimLineNr						*DimLineNr*
+	default value: same as background color
+	Set color to dim.
+
+------------------------------------------------------------------------------
 COMMANDS					*line-number-interval-commands*
 
 :LineNumberIntervalEnable			*:LineNumberIntervalEnable*
@@ -61,6 +73,9 @@ COMMANDS					*line-number-interval-commands*
 
 ==============================================================================
 CHANGELOG					*line-number-interval-changelog*
+
+0.2	2019-10-09
+	- Add highlight feature.
 
 0.1	2019-10-08
 	- Initial version.
