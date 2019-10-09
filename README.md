@@ -8,11 +8,11 @@ Highlight line number by each XX lines.
 
 ### set number
 
-![line-number-interval](https://user-images.githubusercontent.com/1638500/66383495-12517400-e9f8-11e9-98f2-e74bb17952fc.gif)
+![highlight-line-number](https://user-images.githubusercontent.com/1638500/66444757-6b181f80-ea7f-11e9-8d26-20768193934e.gif)
 
 ### set relativenumber
 
-![line-number-interval-relative](https://user-images.githubusercontent.com/1638500/66383521-1e3d3600-e9f8-11e9-98d4-4b604fd45fdc.gif)
+![highlight-line-relative-number](https://user-images.githubusercontent.com/1638500/66444779-79663b80-ea7f-11e9-8c97-8fbd0552c6ca.gif)
 
 ## Requirements
 
