@@ -10,4 +10,4 @@ install:
     - eval "$(curl -Ss https://raw.githubusercontent.com/neovim/bot-ci/master/scripts/travis-setup.sh) nightly-x64"
 
 script:
-    - cd test && ./run.sh && echo Success || echo Fail
+    - cd test && ./run.sh
