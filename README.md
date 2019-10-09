@@ -1,6 +1,6 @@
 # Line Number Interval for Neovim
 
-Set line number by each XX lines.
+Highlight line number by each XX lines.
 
 [![Build Status](https://travis-ci.org/IMOKURI/line-number-interval.nvim.svg?branch=master)](https://travis-ci.org/IMOKURI/line-number-interval.nvim)
 
@@ -26,6 +26,12 @@ let g:line_number_interval#enable_at_startup = 1
 
 " Set interval to display line number. (default: 10)
 let g:line_number_interval = 5
+
+" Set color to highlight and dim.
+" (default: HighlightedLineNr use LineNr color,
+"           DimLineNr use same as background color (it seems hide).)
+highlight HighlightedLineNr guifg=White ctermfg=7
+highlight DimLineNr guifg=Magenta ctermfg=5
 ```
 
 ## Commands

@@ -13,15 +13,35 @@ function! line_number_interval#enable() abort
         endfor
     endfor
 
+    if hlID('DimLineNr') == 0
+        execute 'highlight DimLineNr'
+            \ 'guifg='   s:linenr_color.gui.bg   'guibg='   s:linenr_color.gui.bg
+            \ 'ctermfg=' s:linenr_color.cterm.bg 'ctermbg=' s:linenr_color.cterm.bg
+    endif
+
+    let s:dim_linenr_color = {}
+    for l:type in s:ui_type
+        let s:dim_linenr_color[l:type] = {}
+        for l:fb in s:fg_bg
+            let s:dim_linenr_color[l:type][l:fb] = synIDattr(synIDtrans(hlID('DimLineNr')), l:fb, l:type)
+            if s:dim_linenr_color[l:type][l:fb] ==# ''
+                let s:dim_linenr_color[l:type][l:fb] = 'NONE'
+            endif
+        endfor
+    endfor
+
+    if hlID('HighlightedLineNr') == 0
+        execute 'highlight HighlightedLineNr'
+            \ 'guifg='   s:linenr_color.gui.fg   'guibg='   s:linenr_color.gui.bg
+            \ 'ctermfg=' s:linenr_color.cterm.fg 'ctermbg=' s:linenr_color.cterm.bg
+    endif
+
     execute 'highlight LineNr'
-        \ 'guifg='   s:linenr_color.gui.bg   'guibg='   s:linenr_color.gui.bg
-        \ 'ctermfg=' s:linenr_color.cterm.bg 'ctermbg=' s:linenr_color.cterm.bg
-    execute 'highlight LineNrVisible'
-        \ 'guifg='   s:linenr_color.gui.fg   'guibg='   s:linenr_color.gui.bg
-        \ 'ctermfg=' s:linenr_color.cterm.fg 'ctermbg=' s:linenr_color.cterm.bg
+        \ 'guifg='   s:dim_linenr_color.gui.fg   'guibg='   s:dim_linenr_color.gui.bg
+        \ 'ctermfg=' s:dim_linenr_color.cterm.fg 'ctermbg=' s:dim_linenr_color.cterm.bg
 
     call sign_define('LineNumberInterval', {
-        \ 'numhl': 'LineNrVisible'
+        \ 'numhl': 'HighlightedLineNr'
         \ })
 
     augroup LineNumberInterval
@@ -51,7 +71,7 @@ function! line_number_interval#disable() abort
 endfunction
 
 function! line_number_interval#toggle() abort
-    if s:enabled_line_number_interval
+    if exists('s:enabled_line_number_interval') && s:enabled_line_number_interval
         call line_number_interval#disable()
     else
         call line_number_interval#enable()
