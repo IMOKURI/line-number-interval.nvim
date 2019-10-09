@@ -24,7 +24,7 @@ Highlight line number by each XX lines.
 " Enable line number interval at startup. (default: 0(disable))
 let g:line_number_interval#enable_at_startup = 1
 
-" Set interval to display line number. (default: 10)
+" Set interval to highlight line number. (default: 10)
 let g:line_number_interval = 5
 
 " Set color to highlight and dim.

@@ -20,7 +20,7 @@ CHANGELOG			|line-number-interval-changelog|
 ==============================================================================
 INTRODUCTION					*line-number-interval-introduction*
 
-*line-number-interval* is a Vim plugin that display line number/relativenumber
+*line-number-interval* is a Vim plugin that highlight line number/relativenumber
 by each XX lines.
 
 Latest version:
@@ -45,7 +45,7 @@ g:line_number_interval#enable_at_startup	*g:line_number_interval#enable_at_start
 
 g:line_number_interval				*g:line_number_interval*
 	default value: 10
-	Set interval to display line number.
+	Set interval to highlight line number.
 
 ------------------------------------------------------------------------------
 HIGHLIGHTS				*line-number-interval-highlights*
