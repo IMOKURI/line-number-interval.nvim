@@ -89,16 +89,14 @@ function! line_number_interval#update() abort
         if g:line_number_interval#use_custom
             let l:lnum = line('.') - 1
             let l:numfold = 0
-            let l:custom_interval = deepcopy(g:line_number_interval#custom_interval)
             while l:lnum >= line('w0')
                 let l:numfolddelta = 0
                 if foldclosed(l:lnum) != -1
                     let l:numfolddelta = l:lnum - foldclosed(l:lnum)
                     let l:numfold += l:numfolddelta
                 endif
-                if len(l:custom_interval) && (line('.') - l:lnum - l:numfold) == l:custom_interval[0]
+                if match(g:line_number_interval#custom_interval, '^' . (line('.') - l:lnum - l:numfold) . '$') != -1
                     call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': l:lnum})
-                    call remove(l:custom_interval, 0)
                 endif
                 let l:lnum -= 1 + l:numfolddelta
             endwhile
@@ -109,16 +107,14 @@ function! line_number_interval#update() abort
             else
                 let l:numfold = 0
             endif
-            let l:custom_interval = deepcopy(g:line_number_interval#custom_interval)
             while l:lnum <= line('w$')
                 let l:numfolddelta = 0
                 if foldclosedend(l:lnum) != -1
                     let l:numfolddelta = foldclosedend(l:lnum) - l:lnum
                     let l:numfold += l:numfolddelta
                 endif
-                if len(l:custom_interval) && (l:lnum - line('.') - l:numfold) == l:custom_interval[0]
+                if match(g:line_number_interval#custom_interval, '^' . (l:lnum - line('.') - l:numfold) . '$') != -1
                     call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': l:lnum})
-                    call remove(l:custom_interval, 0)
                 endif
                 let l:lnum += 1 + l:numfolddelta
             endwhile
