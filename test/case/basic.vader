@@ -1,70 +1,76 @@
-Given (prepare base text):
-    1
-    2
-    3
-    4
-    5
-    6
-    7
-    8
-    9
-    10
-    11
-    12
-    13
-    14
-    15
+Include: include/setup.vader
 
-Execute (run test):
-    set number
-    set norelativenumber
+Execute (Check default global variables.):
+    AssertEqual 10, g:line_number_interval
+    AssertEqual 0, g:line_number_interval#use_custom
+
+Execute (Check fibonacci sequence.):
+    AssertEqual [1, 2, 3, 5, 8, 13, 21], line_number_interval#fibonacci()
+
+Execute (Check highlight with default color.):
+    AssertEqual "\nLineNr         xxx ctermfg=11 guifg=Yellow", execute('highlight LineNr')
+
+    LineNumberIntervalEnable
+
+    AssertEqual "\nLineNr         xxx ctermfg=0 guifg=Black", execute('highlight LineNr')
+    AssertEqual "\nDimLineNr      xxx cleared", execute('highlight DimLineNr')
+    AssertEqual "\nHighlightedLineNr xxx ctermfg=11 guifg=Yellow", execute('highlight HighlightedLineNr')
+
+    LineNumberIntervalDisable
+
+    AssertEqual "\nLineNr         xxx ctermfg=11 guifg=Yellow", execute('highlight LineNr')
+
+Execute (Check highlight with configured color.):
+    highlight HighlightedLineNr guifg=White ctermfg=7
+    highlight DimLineNr guifg=Magenta ctermfg=5
+
+    AssertEqual "\nLineNr         xxx ctermfg=11 guifg=Yellow", execute('highlight LineNr')
 
     LineNumberIntervalEnable
 
     AssertEqual "\nLineNr         xxx ctermfg=5 guifg=Magenta", execute('highlight LineNr')
-    AssertEqual "\nsign LineNumberInterval numhl=HighlightedLineNr", execute('sign list LineNumberInterval')
-    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=10  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
-
-    13
-    doautocmd CursorMoved
-
-    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=10  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+    AssertEqual "\nDimLineNr      xxx ctermfg=5 guifg=Magenta", execute('highlight DimLineNr')
+    AssertEqual "\nHighlightedLineNr xxx ctermfg=7 guifg=White", execute('highlight HighlightedLineNr')
 
     LineNumberIntervalDisable
 
-    AssertEqual "\n--- Signs ---\n", execute('sign place group=LineNumberGroup')
-    AssertThrows sign list LineNumberInterval
-    AssertEqual "Vim(sign):E155: Unknown sign: LineNumberInterval", g:vader_exception
     AssertEqual "\nLineNr         xxx ctermfg=11 guifg=Yellow", execute('highlight LineNr')
 
-    set relativenumber
+Execute (Check autocmd.):
+    AssertThrows autocmd LineNumberInterval
+    AssertEqual "Vim(autocmd):E216: No such group or event: LineNumberInterval", g:vader_exception
 
-    LineNumberIntervalToggle
+    LineNumberIntervalEnable
 
-    AssertEqual "\nsign LineNumberInterval numhl=HighlightedLineNr", execute('sign list LineNumberInterval')
-    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=3  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+    AssertEqual "\n--- Autocommands ---\nLineNumberInterval  BufNewFile\n    *         call line_number_interval#update()\nLineNumberInterval  BufReadPost\n    *         call line_number_interval#update()\nLineNumberInterval  CursorMoved\n    *         call line_number_interval#update()\nLineNumberInterval  CursorMovedI\n    *         call line_number_interval#update()", execute('autocmd LineNumberInterval')
 
-    5
-    doautocmd CursorMoved
+    LineNumberIntervalDisable
 
-    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=15  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+    AssertEqual "\n--- Autocommands ---", execute('autocmd LineNumberInterval')
 
-    6,9fold
-
-    1
-    doautocmd CursorMoved
-
-    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=14  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
-
-    set norelativenumber
-
-    4
-    doautocmd CursorMoved
-
-    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=10  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
-
-    LineNumberIntervalToggle
-
-    AssertEqual "\n--- Signs ---\n", execute('sign place group=LineNumberGroup')
+Execute (Check sign group.):
     AssertThrows sign list LineNumberInterval
     AssertEqual "Vim(sign):E155: Unknown sign: LineNumberInterval", g:vader_exception
+    AssertEqual "\n--- Signs ---\n", execute('sign place group=LineNumberGroup')
+
+    LineNumberIntervalEnable
+
+    AssertEqual "\nsign LineNumberInterval numhl=HighlightedLineNr", execute('sign list LineNumberInterval')
+    AssertEqual "\n--- Signs ---\n", execute('sign place group=LineNumberGroup')
+
+    LineNumberIntervalDisable
+
+    AssertThrows sign list LineNumberInterval
+    AssertEqual "Vim(sign):E155: Unknown sign: LineNumberInterval", g:vader_exception
+    AssertEqual "\n--- Signs ---\n", execute('sign place group=LineNumberGroup')
+
+Execute (Check toggle.):
+    AssertEqual "\nLineNr         xxx ctermfg=11 guifg=Yellow", execute('highlight LineNr')
+
+    LineNumberIntervalToggle
+
+    AssertEqual "\nLineNr         xxx ctermfg=0 guifg=Black", execute('highlight LineNr')
+
+    LineNumberIntervalToggle
+
+    AssertEqual "\nLineNr         xxx ctermfg=11 guifg=Yellow", execute('highlight LineNr')

@@ -14,7 +14,7 @@ if [[ ! -d "vader.vim" ]]; then
 fi
 
 # Open neovim with readonly mode just to execute all *.vader tests.
-${RUNVIM} -u minimal_init.vim -c 'Vader! case/**/*.vader' >/dev/null
+${RUNVIM} -u minimal_init.vim -c 'Vader! case/*.vader' >/dev/null
 VADER_EXIT=$?
 
 if [[ -n "${VADER_OUTPUT_FILE}" ]]; then

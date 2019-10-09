@@ -1,0 +1,18 @@
+Before:
+    set nonumber
+    set norelativenumber
+
+    let g:line_number_interval = 10
+    let g:line_number_interval#use_custom = 0
+
+After:
+    LineNumberIntervalDisable
+
+    augroup LineNumberInterval
+        autocmd!
+    augroup END
+    augroup! LineNumberInterval
+
+    highlight clear
+
+    unlet! g:line_number_interval#custom_interval

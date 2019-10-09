@@ -17,7 +17,7 @@ function! line_number_interval#enable() abort
         endfor
     endfor
 
-    if hlID('DimLineNr') == 0
+    if !hlexists('DimLineNr')
         execute 'highlight DimLineNr'
             \ 'guifg='   s:linenr_color.gui.bg   'guibg='   s:linenr_color.gui.bg
             \ 'ctermfg=' s:linenr_color.cterm.bg 'ctermbg=' s:linenr_color.cterm.bg
@@ -42,7 +42,7 @@ function! line_number_interval#enable() abort
         let s:dim_linenr_color.gui.fg = 'Black'
     endif
 
-    if hlID('HighlightedLineNr') == 0
+    if !hlexists('HighlightedLineNr')
         execute 'highlight HighlightedLineNr'
             \ 'guifg='   s:linenr_color.gui.fg   'guibg='   s:linenr_color.gui.bg
             \ 'ctermfg=' s:linenr_color.cterm.fg 'ctermbg=' s:linenr_color.cterm.bg
@@ -73,11 +73,16 @@ function! line_number_interval#disable() abort
     augroup END
 
     call sign_unplace('LineNumberGroup', {'buffer': bufname('%')})
-    call sign_undefine('LineNumberInterval')
+    try
+        call sign_undefine('LineNumberInterval')
+    catch /E155: Unknown sign: LineNumberInterval/
+    endtry
 
-    execute 'highlight LineNr'
-        \ 'guifg='   s:linenr_color.gui.fg   'guibg='   s:linenr_color.gui.bg
-        \ 'ctermfg=' s:linenr_color.cterm.fg 'ctermbg=' s:linenr_color.cterm.bg
+    if exists('s:linenr_color')
+        execute 'highlight LineNr'
+            \ 'guifg='   s:linenr_color.gui.fg   'guibg='   s:linenr_color.gui.bg
+            \ 'ctermfg=' s:linenr_color.cterm.fg 'ctermbg=' s:linenr_color.cterm.bg
+    endif
 
     let s:enabled_line_number_interval = 0
 endfunction

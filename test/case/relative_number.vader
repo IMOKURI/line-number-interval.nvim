@@ -1,0 +1,47 @@
+Include: include/setup.vader
+
+Given (Prepare buffer has 15 lines.):
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+    12
+    13
+    14
+    15
+
+Execute (Check set relativenumber.):
+    set relativenumber
+
+    LineNumberIntervalEnable
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=11  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    13
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=3  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+Execute (Check set relativenumber with fold.):
+    set relativenumber
+
+    LineNumberIntervalEnable
+
+    6,9fold
+
+    1
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=14  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    15
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=2  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')

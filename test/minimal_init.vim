@@ -12,5 +12,4 @@ set runtimepath+=../
 filetype plugin indent on
 syntax on
 
-highlight HighlightedLineNr guifg=White ctermfg=7
-highlight DimLineNr guifg=Magenta ctermfg=5
+set lines=18
