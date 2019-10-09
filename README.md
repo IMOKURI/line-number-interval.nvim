@@ -14,6 +14,10 @@ Highlight line number by each XX lines.
 
 ![highlight-line-relative-number](https://user-images.githubusercontent.com/1638500/66444779-79663b80-ea7f-11e9-8c97-8fbd0552c6ca.gif)
 
+### set relativenumber with custom interval (fibonacci sequence)
+
+![highlight-line-relative-number-custom](https://user-images.githubusercontent.com/1638500/66466246-565a7c80-eabd-11e9-9ca8-1db2b0160c0a.gif)
+
 ## Requirements
 
 - Neovim 0.3.2
