@@ -1,11 +1,15 @@
 function! line_number_interval#enable() abort
-    let s:ui_type = ['gui', 'cterm']
-    let s:fg_bg = ['fg', 'bg']
+    if g:line_number_interval#use_custom && !exists('g:line_number_interval#custom_interval')
+        let g:line_number_interval#custom_interval = line_number_interval#fibonacci()
+    endif
+
+    let l:ui_type = ['gui', 'cterm']
+    let l:fg_bg = ['fg', 'bg']
 
     let s:linenr_color = {}
-    for l:type in s:ui_type
+    for l:type in l:ui_type
         let s:linenr_color[l:type] = {}
-        for l:fb in s:fg_bg
+        for l:fb in l:fg_bg
             let s:linenr_color[l:type][l:fb] = synIDattr(synIDtrans(hlID('LineNr')), l:fb, l:type)
             if s:linenr_color[l:type][l:fb] ==# ''
                 let s:linenr_color[l:type][l:fb] = 'NONE'
@@ -20,9 +24,9 @@ function! line_number_interval#enable() abort
     endif
 
     let s:dim_linenr_color = {}
-    for l:type in s:ui_type
+    for l:type in l:ui_type
         let s:dim_linenr_color[l:type] = {}
-        for l:fb in s:fg_bg
+        for l:fb in l:fg_bg
             let s:dim_linenr_color[l:type][l:fb] = synIDattr(synIDtrans(hlID('DimLineNr')), l:fb, l:type)
             if s:dim_linenr_color[l:type][l:fb] ==# ''
                 let s:dim_linenr_color[l:type][l:fb] = 'NONE'
@@ -82,46 +86,94 @@ function! line_number_interval#update() abort
     call sign_unplace('LineNumberGroup', {'buffer': bufname('%')})
 
     if &relativenumber
-        let s:lnum = line('.') - 1
-        let s:numfold = 0
-        while s:lnum >= line('w0')
-            let s:numfolddelta = 0
-            if foldclosed(s:lnum) != -1
-                let s:numfolddelta = s:lnum - foldclosed(s:lnum)
-                let s:numfold += s:numfolddelta
-            endif
-            if (line('.') - s:lnum - s:numfold) % g:line_number_interval == 0
-                call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
-            endif
-            let s:lnum -= 1 + s:numfolddelta
-        endwhile
+        if g:line_number_interval#use_custom
+            let l:lnum = line('.') - 1
+            let l:numfold = 0
+            let l:custom_interval = deepcopy(g:line_number_interval#custom_interval)
+            while l:lnum >= line('w0')
+                let l:numfolddelta = 0
+                if foldclosed(l:lnum) != -1
+                    let l:numfolddelta = l:lnum - foldclosed(l:lnum)
+                    let l:numfold += l:numfolddelta
+                endif
+                if len(l:custom_interval) && (line('.') - l:lnum - l:numfold) == l:custom_interval[0]
+                    call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': l:lnum})
+                    call remove(l:custom_interval, 0)
+                endif
+                let l:lnum -= 1 + l:numfolddelta
+            endwhile
 
-        let s:lnum = line('.') + 1
-        if foldclosed(line('.')) != -1
-            let s:numfold = 1
+            let l:lnum = line('.') + 1
+            if foldclosed(line('.')) != -1
+                let l:numfold = 1
+            else
+                let l:numfold = 0
+            endif
+            let l:custom_interval = deepcopy(g:line_number_interval#custom_interval)
+            while l:lnum <= line('w$')
+                let l:numfolddelta = 0
+                if foldclosedend(l:lnum) != -1
+                    let l:numfolddelta = foldclosedend(l:lnum) - l:lnum
+                    let l:numfold += l:numfolddelta
+                endif
+                if len(l:custom_interval) && (l:lnum - line('.') - l:numfold) == l:custom_interval[0]
+                    call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': l:lnum})
+                    call remove(l:custom_interval, 0)
+                endif
+                let l:lnum += 1 + l:numfolddelta
+            endwhile
+
         else
-            let s:numfold = 0
+            let l:lnum = line('.') - 1
+            let l:numfold = 0
+            while l:lnum >= line('w0')
+                let l:numfolddelta = 0
+                if foldclosed(l:lnum) != -1
+                    let l:numfolddelta = l:lnum - foldclosed(l:lnum)
+                    let l:numfold += l:numfolddelta
+                endif
+                if (line('.') - l:lnum - l:numfold) % g:line_number_interval == 0
+                    call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': l:lnum})
+                endif
+                let l:lnum -= 1 + l:numfolddelta
+            endwhile
+
+            let l:lnum = line('.') + 1
+            if foldclosed(line('.')) != -1
+                let l:numfold = 1
+            else
+                let l:numfold = 0
+            endif
+            while l:lnum <= line('w$')
+                let l:numfolddelta = 0
+                if foldclosedend(l:lnum) != -1
+                    let l:numfolddelta = foldclosedend(l:lnum) - l:lnum
+                    let l:numfold += l:numfolddelta
+                endif
+                if (l:lnum - line('.') - l:numfold) % g:line_number_interval == 0
+                    call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': l:lnum})
+                endif
+                let l:lnum += 1 + l:numfolddelta
+            endwhile
         endif
-        while s:lnum <= line('w$')
-            let s:numfolddelta = 0
-            if foldclosedend(s:lnum) != -1
-                let s:numfolddelta = foldclosedend(s:lnum) - s:lnum
-                let s:numfold += s:numfolddelta
-            endif
-            if (s:lnum - line('.') - s:numfold) % g:line_number_interval == 0
-                call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
-            endif
-            let s:lnum += 1 + s:numfolddelta
-        endwhile
 
     elseif &number
-        let s:lnum = line('w0')
-        while s:lnum <= line('w$')
-            if s:lnum % g:line_number_interval == 0 && s:lnum != line('.')
-                call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': s:lnum})
+        let l:lnum = line('w0')
+        while l:lnum <= line('w$')
+            if l:lnum % g:line_number_interval == 0 && l:lnum != line('.')
+                call sign_place('', 'LineNumberGroup', 'LineNumberInterval', bufname('%'), {'lnum': l:lnum})
             endif
-            let s:lnum += 1
+            let l:lnum += 1
         endwhile
 
     endif
+endfunction
+
+function! line_number_interval#fibonacci() abort
+    let l:fibonacci = [1, 2]
+    while l:fibonacci[-1] <= &lines
+        call add(l:fibonacci, (l:fibonacci[-1] + l:fibonacci[-2]))
+    endwhile
+
+    return l:fibonacci
 endfunction

@@ -32,6 +32,15 @@ let g:line_number_interval = 5
 "           DimLineNr use same as background color (it seems hide).)
 highlight HighlightedLineNr guifg=White ctermfg=7
 highlight DimLineNr guifg=Magenta ctermfg=5
+
+" Enable to use custom interval. (default: 0(disable))
+" This option is only for relativenumber.
+let g:line_number_interval#use_custom = 1
+
+" Set custom interval list.
+" (default: fibonacci sequence ([1, 2, 3, 5, 8, 13, 21, 34, 55, ...]))
+" This option is only for relativenumber.
+let g:line_number_interval#custom_interval = [2, 4, 8, 16, 32, 64]
 ```
 
 ## Commands

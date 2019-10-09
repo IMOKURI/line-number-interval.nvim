@@ -1,0 +1,46 @@
+Given (prepare base text):
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+    12
+    13
+    14
+    15
+
+Execute (run test):
+    let g:line_number_interval#use_custom = 1
+
+    set relativenumber
+
+    LineNumberIntervalEnable
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=2  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n    line=3  id=2  group=LineNumberGroup  name=LineNumberInterval  priority=10\n    line=4  id=3  group=LineNumberGroup  name=LineNumberInterval  priority=10\n    line=6  id=4  group=LineNumberGroup  name=LineNumberInterval  priority=10\n    line=9  id=5  group=LineNumberGroup  name=LineNumberInterval  priority=10\n    line=14  id=6  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    set norelativenumber
+    set number
+
+    4
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=10  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    LineNumberIntervalDisable
+
+    let g:line_number_interval#custom_interval = [3, 9]
+
+    set relativenumber
+
+    LineNumberIntervalToggle
+
+    2
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=5  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n    line=11  id=2  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
