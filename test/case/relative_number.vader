@@ -83,3 +83,20 @@ Execute (Check set relativenumber on fold (backward).):
     doautocmd CursorMoved
 
     AssertEqual "\n--- Signs ---\n", execute('sign place group=LineNumberGroup')
+
+Execute (Check set relativenumber with configured interval.):
+    let g:line_number_interval = 7
+
+    set relativenumber
+
+    LineNumberIntervalEnable
+
+    3
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=10  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    13
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=6  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
