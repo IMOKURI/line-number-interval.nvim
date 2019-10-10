@@ -45,3 +45,41 @@ Execute (Check set relativenumber with fold.):
     doautocmd CursorMoved
 
     AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=2  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+Execute (Check set relativenumber on fold (forward).):
+    set relativenumber
+
+    LineNumberIntervalEnable
+
+    2,4fold
+
+" Known Issue
+" If you go to folded line (exclude top of folded line, in this case, press `3G` or `4G` in normal mode), there is wrong sign.
+    2
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=14  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    14
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\n", execute('sign place group=LineNumberGroup')
+
+Execute (Check set relativenumber on fold (backward).):
+    set relativenumber
+
+    LineNumberIntervalEnable
+
+    12,14fold
+
+" Known Issue
+" If you go to folded line (exclude top of folded line, in this case, press `13G` or `14G` in normal mode), there is wrong sign.
+    12
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=2  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
+    2
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\n", execute('sign place group=LineNumberGroup')

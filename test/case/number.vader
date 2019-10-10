@@ -48,6 +48,18 @@ Execute (Check set number with fold.):
 
     AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=10  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
 
+Execute (Check set number on fold.):
+    set number
+
+    LineNumberIntervalEnable
+
+    9,12fold
+
+    4
+    doautocmd CursorMoved
+
+    AssertEqual "\n--- Signs ---\nSigns for [Vader-workbench]:\n    line=10  id=1  group=LineNumberGroup  name=LineNumberInterval  priority=10\n", execute('sign place group=LineNumberGroup')
+
 Execute (Check set number with configured interval.):
     let g:line_number_interval = 7
 
