@@ -4,10 +4,10 @@ filetype off
 set runtimepath=$VIMRUNTIME
 
 " Add vader.vim to runtimepath
-set runtimepath+=./vader.vim
+set runtimepath+=./test/vader.vim
 
 " Add plugin directory into runtimepath
-set runtimepath+=../
+set runtimepath+=./
 
 filetype plugin indent on
 syntax on
