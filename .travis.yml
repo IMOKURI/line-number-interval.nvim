@@ -16,3 +16,6 @@ script:
 after_success:
     - covimerage xml
     - bash <(curl -s https://codecov.io/bash) -f coverage.xml
+
+notifications:
+    email: false
