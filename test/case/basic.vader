@@ -2,15 +2,8 @@ Include: include/setup.vader
 
 Execute (Run checkhealth.):
     checkhealth line_number_interval
-    $d
-    s/ \d\+\.\d\+\.\d\+//
-
-Expect (Check checkhealth.):
-
-  health#line_number_interval#check
-  ========================================================================
-  ## line-number-interval.nvim
-    - OK: Neovim version is fine.
+    %y
+    Assert @0 =~# 'Neovim version is fine.'
 
 Execute (Check default global variables.):
     AssertEqual 10, g:line_number_interval
