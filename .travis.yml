@@ -1,13 +1,17 @@
 dist: xenial
-language: minimal
+language: python
 
 env:
     global:
         - PATH=$HOME/neovim/bin:$PATH
 
 install:
+    - pip install -U covimerage
     - git clone https://github.com/junegunn/vader.vim.git test/vader.vim
     - eval "$(curl -Ss https://raw.githubusercontent.com/neovim/bot-ci/master/scripts/travis-setup.sh) nightly-x64"
 
 script:
     - cd test && ./run.sh
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash) -f coverage.xml
