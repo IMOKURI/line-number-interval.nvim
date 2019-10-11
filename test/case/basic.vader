@@ -1,7 +1,9 @@
 Include: include/setup.vader
 
-Execute (Check checkhealth.):
+Execute (Run checkhealth.):
     checkhealth line_number_interval
+
+Then (Check checkhealth.):
     let g:res = search('Neovim version is fine.')
     quit
     AssertNotEqual 0, g:res
