@@ -1,9 +1,9 @@
 Include: include/setup.vader
 
-Execute (Run checkhealth.):
-    checkhealth line_number_interval
-    %y
-    Assert @0 =~# 'Neovim version is fine.'
+"Execute (Check checkhealth.):
+"    checkhealth line_number_interval
+"    %y
+"    Assert @0 =~# 'Neovim version is fine.'
 
 Execute (Check default global variables.):
     AssertEqual 10, g:line_number_interval
