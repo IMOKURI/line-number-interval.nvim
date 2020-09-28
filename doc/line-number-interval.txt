@@ -39,7 +39,7 @@ INTERFACE					*line-number-interval-interface*
 ------------------------------------------------------------------------------
 VARIABLES					*line-number-interval-variables*
 
-g:line_number_interval#enable_at_startup	*g:line_number_interval#enable_at_startup*
+g:line_number_interval_enable_at_startup	*g:line_number_interval_enable_at_startup*
 	default value: 0 (disable)
 	Enable line-number-interval at startup if this value is 1.
 
